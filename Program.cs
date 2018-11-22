@@ -15,11 +15,6 @@ namespace SecretSanta
             SecretSanta secretSanta = new SecretSanta(participants);
             Console.WriteLine("Тайные санты успешно сгенерированны!");
             MenuServise.callGetBestowedFor(secretSanta);
-            //Console.Read();
         }
-
-    
-        
-
     }
 }

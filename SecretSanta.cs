@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace SecretSanta
 {
@@ -16,7 +18,7 @@ namespace SecretSanta
 
         public string GetBestowedFor(string nameSecterSanta)
         {
-            if(nameSecterSanta == null) return null;
+            if(nameSecterSanta == null) throw new NullReferenceException();
             foreach (var secretSanta in _listSecretSant)
             {
                 if (nameSecterSanta == secretSanta.Key) return secretSanta.Value;
@@ -32,9 +34,8 @@ namespace SecretSanta
             var i = 0;
             foreach (var num in randomNumsSant)
             {
-                if(!listSecretSant.ContainsKey(_participants[i]))
-                    listSecretSant.Add(_participants[i], _participants[num]);
-
+                if (!listSecretSant.ContainsKey(_participants[i]))
+                    listSecretSant.Add(_participants[i], _participants[num]);  
                 i++;
             }
             return listSecretSant;

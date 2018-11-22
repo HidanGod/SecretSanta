@@ -18,17 +18,18 @@ namespace SecretSanta
                 return int.Parse(textFromConsole);
             }
             Console.WriteLine("количество участников должно быть числом больше нуля");
-            return participantsCount = GeParticipantsCount();
+            return GeParticipantsCount();
         }
 
         static public void callGetBestowedFor(SecretSanta secretSanta)
         {
+            Console.Clear();
             Console.WriteLine("Что бы узнать имя своего одариваемого введите сове УНИКАЛЬНОЕ имя");
             var cecretSanta = Console.ReadLine();
             Console.WriteLine("Ваш одариваемый это: {0}", secretSanta.GetBestowedFor(cecretSanta));
-            Console.WriteLine("Назвать имя одариваемого для следующего участника? (Д/Н)");
-            var yesNo = Console.ReadLine();
-            if (yesNo == "Д" || yesNo == "д" || yesNo == "l" || yesNo == "L") callGetBestowedFor(secretSanta);
+            Console.WriteLine("Назвать имя одариваемого для следующего участника? (Y/N)");
+            var yesNo = Console.ReadKey();
+            if (yesNo.Key == ConsoleKey.Y) callGetBestowedFor(secretSanta);
         }
 
         static public string[] CreateParticipants(int participantsCount)
@@ -37,20 +38,15 @@ namespace SecretSanta
             for (int i = 0; i < participantsCount; i++)
             {
                 Console.WriteLine("введите УНИКАЛЬНОЕ имя {0} участника", (i + 1));
-                participants[i] = Console.ReadLine();
+                var participant = Console.ReadLine();
+                if (!participants.Contains(participant)) participants[i] = participant;
+                else
+                {
+                    Console.WriteLine("Имя \"{0}\" не  УНИКАЛЬНО!!!", participant);
+                    i--;
+                }
             }
-
-            //int i = 0;
-            //while (participantsCount < i)
-            //{
-
-            //        Console.WriteLine("введите УНИКАЛЬНОЕ имя {0} участника", (i + 1));
-            //    participants[i] = Console.ReadLine();
-            //    i++;
-            //}
             return participants;
         }
-
-
     }
 }
