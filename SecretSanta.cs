@@ -26,12 +26,15 @@ namespace SecretSanta
 
         public Dictionary<string, string> CreateListSecretSant()
         {
-            var listSecretSant = new Dictionary<string, string>();
+            if (_participants == null) return new Dictionary<string, string>();
             var randomNumsSant = GenerateRandomNumsSant(new HashSet<int>(), new Random(), _participants.Length);
+            var listSecretSant = new Dictionary<string, string>();
             var i = 0;
             foreach (var num in randomNumsSant)
             {
-                listSecretSant.Add(_participants[i], _participants[num]);
+                if(!listSecretSant.ContainsKey(_participants[i]))
+                    listSecretSant.Add(_participants[i], _participants[num]);
+
                 i++;
             }
             return listSecretSant;
@@ -39,7 +42,8 @@ namespace SecretSanta
 
         public HashSet<int> GenerateRandomNumsSant(HashSet<int> randomNumsSant, Random randomNum, int count)
         {
-            var countrandomNumSant = randomNumsSant.Count;
+            if (_participants == null) return new HashSet<int>();
+             var countrandomNumSant = randomNumsSant.Count;
             if (countrandomNumSant == count) return randomNumsSant;
             var num = randomNum.Next(count);
             if (!randomNumsSant.Contains(num) && num != countrandomNumSant) randomNumsSant.Add(num);
