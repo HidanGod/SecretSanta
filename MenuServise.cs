@@ -13,11 +13,11 @@ namespace SecretSanta
             int participantsCount;
             Console.WriteLine("Введите количество участников");
             string textFromConsole = Console.ReadLine();
-            if (Int32.TryParse(textFromConsole, out participantsCount))
+            if (Int32.TryParse(textFromConsole, out participantsCount) && int.Parse(textFromConsole)>1)
             {
                 return int.Parse(textFromConsole);
             }
-            Console.WriteLine("количество участников должно быть числом больше нуля");
+            Console.WriteLine("количество участников должно быть числом больше 1");
             return GeParticipantsCount();
         }
 

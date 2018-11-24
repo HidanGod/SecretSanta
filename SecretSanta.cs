@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -29,7 +30,7 @@ namespace SecretSanta
         public Dictionary<string, string> CreateListSecretSant()
         {
             if (_participants == null) return new Dictionary<string, string>();
-            var randomNumsSant = GenerateRandomNumsSant(new HashSet<int>(), new Random(), _participants.Length);
+            var randomNumsSant = GenerateRandomNumsSant(_participants.Length);
             var listSecretSant = new Dictionary<string, string>();
             var i = 0;
             foreach (var num in randomNumsSant)
@@ -41,14 +42,23 @@ namespace SecretSanta
             return listSecretSant;
         }
 
-        public HashSet<int> GenerateRandomNumsSant(HashSet<int> randomNumsSant, Random randomNum, int count)
+        public int[] GenerateRandomNumsSant(int count)
         {
-            if (_participants == null) return new HashSet<int>();
-             var countrandomNumSant = randomNumsSant.Count;
-            if (countrandomNumSant == count) return randomNumsSant;
-            var num = randomNum.Next(count);
-            if (!randomNumsSant.Contains(num) && num != countrandomNumSant) randomNumsSant.Add(num);
-            return GenerateRandomNumsSant(randomNumsSant, randomNum, count);
+            var generateRandomNumsSant = new int[count];
+            var permutation = Enumerable.Range(0, count).ToList();
+            var random = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                var num = random.Next(permutation.Count);
+                while (permutation[num] == i)
+                {
+                    num = random.Next(permutation.Count);
+                }
+                generateRandomNumsSant[i] = permutation[num];
+                permutation.Remove(num);
+            }
+
+            return generateRandomNumsSant;
         }
     }
 }

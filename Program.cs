@@ -10,9 +10,10 @@ namespace SecretSanta
     {
         static void Main(string[] args)
         {
-            int participantsCount = MenuServise.GeParticipantsCount();
+           
+            var participantsCount = MenuServise.GeParticipantsCount();
             var participants = MenuServise.CreateParticipants(participantsCount);
-            SecretSanta secretSanta = new SecretSanta(participants);
+            var secretSanta = new SecretSanta(participants);
             Console.WriteLine("Тайные санты успешно сгенерированны!");
             MenuServise.callGetBestowedFor(secretSanta);
         }

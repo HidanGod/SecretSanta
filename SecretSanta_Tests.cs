@@ -55,13 +55,13 @@ namespace SecretSanta
         [Test]
         public void GenerateRandomNumSant_Count()
         {
-            _secretSantaGood.GenerateRandomNumsSant(randomNumSant, randomNum, participantsGood.Length).Count.Should().Be(2);
+            _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(2);
         }
 
         [Test]
         public void GenerateRandomNumSant_Value()
         {
-            var result = _secretSantaGood.GenerateRandomNumsSant(randomNumSant, randomNum, participantsGood.Length);
+            var result = _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length);
             var testHashSet = new HashSet<int>();
             testHashSet.Add(1);
             testHashSet.Add(0);
@@ -69,16 +69,30 @@ namespace SecretSanta
         }
 
         [Test]
+        public void GenerateRandomNumSant_ManyValue()
+        {
+            participantsGood = new string[4] { "1", "2", "3", "4"};
+            _secretSantaGood = new SecretSanta(participantsGood);
+            for (int i = 0; i < 1000; i++)
+            {
+                _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(participantsGood.Length);
+            }
+        }
+
+
+        [Test]
         public void CreateListSecretSant_Count()
         {
             _secretSantaGood.CreateListSecretSant().Count.Should().Be(2);
         }
+
         [Test]
         public void CreateListSecretSant_ForBadSecretSanta()
         {
             var ex = new ArgumentException("\"1\" имя было не уникально");
             //Assert.Throws<ArgumentNullException>(() => _secretSantaBad.CreateListSecretSant());
         }
+
         [Test]
         public void CreateListSecretSant_Value()
         {
@@ -102,7 +116,7 @@ namespace SecretSanta
         {
             string[] participants = new string[0];
             SecretSanta secretSanta = new SecretSanta(participants);
-            secretSanta.GenerateRandomNumsSant(randomNumSant, randomNum, participants.Length).Should().BeEmpty();
+            secretSanta.GenerateRandomNumsSant(participants.Length).Should().BeEmpty();
         }
 
     }
