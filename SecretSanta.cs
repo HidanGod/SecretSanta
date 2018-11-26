@@ -6,7 +6,7 @@ using NUnit.Framework.Internal;
 
 namespace SecretSanta
 {
-    class SecretSanta
+    public class SecretSanta
     {
         private readonly string[] _participants;
         private readonly Dictionary<string, string> _listSecretSant;
@@ -15,6 +15,10 @@ namespace SecretSanta
         {
             _participants = participants;
             _listSecretSant = CreateListSecretSant();
+        }
+
+        public SecretSanta()
+        {
         }
 
         public string GetBestowedFor(string nameSecterSanta)
@@ -44,7 +48,9 @@ namespace SecretSanta
 
         public int[] GenerateRandomNumsSant(int count)
         {
+          
             var generateRandomNumsSant = new int[count];
+            if (count == 1) return generateRandomNumsSant;
             var permutation = Enumerable.Range(0, count).ToList();
             var random = new Random();
             for (int i = 0; i < count; i++)
