@@ -21,15 +21,15 @@ namespace SecretSanta
             return GeParticipantsCount();
         }
 
-        static public void callGetBestowedFor(SecretSanta secretSanta)
+        static public void callGetBestowedFor(SecretSantaDictionary secretSantaDictionary)
         {
             Console.Clear();
             Console.WriteLine("Что бы узнать имя своего одариваемого введите сове УНИКАЛЬНОЕ имя");
             var cecretSanta = Console.ReadLine();
-            Console.WriteLine("Ваш одариваемый это: {0}", secretSanta.GetBestowedFor(cecretSanta));
+            Console.WriteLine("Ваш одариваемый это: {0}", secretSantaDictionary.GetBestowedFor(cecretSanta));
             Console.WriteLine("Назвать имя одариваемого для следующего участника? (Y/N)");
             var yesNo = Console.ReadKey();
-            if (yesNo.Key == ConsoleKey.Y) callGetBestowedFor(secretSanta);
+            if (yesNo.Key == ConsoleKey.Y) callGetBestowedFor(secretSantaDictionary);
         }
 
         static public string[] CreateParticipants(int participantsCount)

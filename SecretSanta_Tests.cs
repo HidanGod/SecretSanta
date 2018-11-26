@@ -15,9 +15,9 @@ namespace SecretSanta
     [TestFixture]
     class SecretSanta_Tests
     {
-        private SecretSanta _secretSantaGood;
+        private SecretSantaDictionary _secretSantaDictionaryGood;
         private string[] participantsGood;
-        private SecretSanta _secretSantaBad;
+        private SecretSantaDictionary _secretSantaDictionaryBad;
         private string[] participantsBad;
         private HashSet<int> randomNumSant;
         private Random randomNum;
@@ -26,9 +26,9 @@ namespace SecretSanta
         public void SetUp()
         {
             participantsGood = new string[2] {"1", "2"};
-            _secretSantaGood = new SecretSanta(participantsGood);
+            _secretSantaDictionaryGood = new SecretSantaDictionary(participantsGood);
             participantsBad = new string[2] { "1", "1" };
-            _secretSantaBad = new SecretSanta(participantsBad);
+            _secretSantaDictionaryBad = new SecretSantaDictionary(participantsBad);
             randomNumSant = new HashSet<int>();
             randomNum = new Random();
         }
@@ -37,31 +37,31 @@ namespace SecretSanta
         [Test]
         public void GetSecretSantaFor_Null()
         {
-            Assert.Throws<NullReferenceException>(() => _secretSantaGood.GetBestowedFor(null));
+            Assert.Throws<NullReferenceException>(() => _secretSantaDictionaryGood.GetBestowedFor(null));
         }
 
         [Test]
         public void GetBestowedFor_1()
         {
-            _secretSantaGood.GetBestowedFor("1").Should().Be("2");
+            _secretSantaDictionaryGood.GetBestowedFor("1").Should().Be("2");
         }
 
         [Test]
         public void GetBestowedFor_NoSecretSanta()
         {
-            _secretSantaGood.GetBestowedFor("3").Should().Be("Секретный санта не найден...");
+            _secretSantaDictionaryGood.GetBestowedFor("3").Should().Be("Секретный санта не найден...");
         }
 
         [Test]
         public void GenerateRandomNumSant_Count()
         {
-            _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(2);
+            GeneratorRandomSant.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(2);
         }
 
         [Test]
         public void GenerateRandomNumSant_Value()
         {
-            var result = _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length);
+            var result = GeneratorRandomSant.GenerateRandomNumsSant(participantsGood.Length);
             var testHashSet = new HashSet<int>();
             testHashSet.Add(1);
             testHashSet.Add(0);
@@ -72,10 +72,10 @@ namespace SecretSanta
         public void GenerateRandomNumSant_ManyValue()
         {
             participantsGood = new string[4] { "1", "2", "3", "4"};
-            _secretSantaGood = new SecretSanta(participantsGood);
+            _secretSantaDictionaryGood = new SecretSantaDictionary(participantsGood);
             for (int i = 0; i < 1000; i++)
             {
-                _secretSantaGood.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(participantsGood.Length);
+                GeneratorRandomSant.GenerateRandomNumsSant(participantsGood.Length).Length.Should().Be(participantsGood.Length);
             }
         }
 
@@ -83,20 +83,20 @@ namespace SecretSanta
         [Test]
         public void CreateListSecretSant_Count()
         {
-            _secretSantaGood.CreateListSecretSant().Count.Should().Be(2);
+            _secretSantaDictionaryGood.CreateListSecretSant().Count.Should().Be(2);
         }
 
         [Test]
         public void CreateListSecretSant_ForBadSecretSanta()
         {
             var ex = new ArgumentException("\"1\" имя было не уникально");
-            //Assert.Throws<ArgumentNullException>(() => _secretSantaBad.CreateListSecretSant());
+            //Assert.Throws<ArgumentNullException>(() => _secretSantaDictionaryBad.CreateListSecretSant());
         }
 
         [Test]
         public void CreateListSecretSant_Value()
         {
-            var result = _secretSantaGood.CreateListSecretSant();
+            var result = _secretSantaDictionaryGood.CreateListSecretSant();
             var testDictionary = new Dictionary<string, string>();
             testDictionary.Add("1","2");
             testDictionary.Add("2","1");
@@ -107,16 +107,16 @@ namespace SecretSanta
         public void CreateListSecretSant__participantsIsNull()
         {
             string[] participants = new string[0];
-            SecretSanta secretSanta = new SecretSanta(participants);
-            secretSanta.CreateListSecretSant().Should().BeEmpty();
+            SecretSantaDictionary secretSantaDictionary = new SecretSantaDictionary(participants);
+            secretSantaDictionary.CreateListSecretSant().Should().BeEmpty();
         }
 
         [Test]
         public void GenerateRandomNumSant__participantsIsNull()
         {
             string[] participants = new string[0];
-            SecretSanta secretSanta = new SecretSanta(participants);
-            secretSanta.GenerateRandomNumsSant(participants.Length).Should().BeEmpty();
+            SecretSantaDictionary secretSantaDictionary = new SecretSantaDictionary(participants);
+            GeneratorRandomSant.GenerateRandomNumsSant(participants.Length).Should().BeEmpty();
         }
 
     }

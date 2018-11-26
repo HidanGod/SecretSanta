@@ -13,7 +13,7 @@ namespace SecretSanta
            
             var participantsCount = MenuServise.GeParticipantsCount();
             var participants = MenuServise.CreateParticipants(participantsCount);
-            var secretSanta = new SecretSanta(participants);
+            var secretSanta = new SecretSantaDictionary(participants);
             Console.WriteLine("Тайные санты успешно сгенерированны!");
             MenuServise.callGetBestowedFor(secretSanta);
         }

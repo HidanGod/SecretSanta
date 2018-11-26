@@ -6,35 +6,32 @@ using NUnit.Framework.Internal;
 
 namespace SecretSanta
 {
-    public class SecretSanta
+    public class SecretSantaDictionary
     {
         private readonly string[] _participants;
         private readonly Dictionary<string, string> _listSecretSant;
 
-        public SecretSanta(string[] participants)
+        public SecretSantaDictionary(string[] participants)
         {
             _participants = participants;
             _listSecretSant = CreateListSecretSant();
         }
 
-        public SecretSanta()
+        public SecretSantaDictionary()
         {
         }
 
         public string GetBestowedFor(string nameSecterSanta)
         {
             if(nameSecterSanta == null) throw new NullReferenceException();
-            foreach (var secretSanta in _listSecretSant)
-            {
-                if (nameSecterSanta == secretSanta.Key) return secretSanta.Value;
-            }
+            if(_listSecretSant.ContainsKey(nameSecterSanta)) return _listSecretSant[nameSecterSanta];
             return "Секретный санта не найден...";
         }
 
         public Dictionary<string, string> CreateListSecretSant()
         {
             if (_participants == null) return new Dictionary<string, string>();
-            var randomNumsSant = GenerateRandomNumsSant(_participants.Length);
+            var randomNumsSant = GeneratorRandomSant.GenerateRandomNumsSant(_participants.Length);
             var listSecretSant = new Dictionary<string, string>();
             var i = 0;
             foreach (var num in randomNumsSant)
@@ -46,25 +43,6 @@ namespace SecretSanta
             return listSecretSant;
         }
 
-        public int[] GenerateRandomNumsSant(int count)
-        {
-          
-            var generateRandomNumsSant = new int[count];
-            if (count == 1) return generateRandomNumsSant;
-            var permutation = Enumerable.Range(0, count).ToList();
-            var random = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                var num = random.Next(permutation.Count);
-                while (permutation[num] == i)
-                {
-                    num = random.Next(permutation.Count);
-                }
-                generateRandomNumsSant[i] = permutation[num];
-                permutation.Remove(num);
-            }
-
-            return generateRandomNumsSant;
-        }
+      
     }
 }
